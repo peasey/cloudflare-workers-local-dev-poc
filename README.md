@@ -1,6 +1,4 @@
-# Cloudflare Workers - Enhanced Development Experience
-
-This is a fork of the [blue / green deployments for Cloudflare Workers](https://github.com/peasey/cloudflare-workers-blue-green-poc) repo.
+# An enhanced development experience for Cloudflare Workers
 
 This repo contains a minimal example from a proof of concept to enhance the local development experience for Cloudflare Workers. The principles of substitutable dependencies and execution context are implemented to enable Node.js and VS Code to be used for local development, testing and debugging. The Serverless Framework plugin in this repo is extended to create "logical environments" that enable side by side deployment use cases such as multiple developers working in the same account, or CI/CD processes deploying ephemeral resources.
 
@@ -33,41 +31,13 @@ The configuration is handled by `dotenv` so the first thing you need to do is ad
 
 I've created some npm scripts to simplify the commands when wrapped with configuration. Replace _somewhere.com_ with the host you configured in the **.env** file below:
 
-### Initial deploy to the default slot (blue):
+### Deploy:
 
 ```bash
 > npm run deploy
-> curl https://blue-api.somewhere.com/account
-> "Processing account resource from blue slot..."
 ```
 
-### Activate the blue slot:
-
-```bash
-> npm run activate-slot:blue
-> curl https://api.somewhere.com/account
-> "Processing account resource from blue slot..."
-```
-
-> Note: you cold also just run `npm run rotate` above to activate the slot.
-
-### Deploy to the other slot (green):
-
-```bash
-> npm run deploy
-> curl https://green-api.somewhere.com/account
-> "Processing account resource from green slot..."
-```
-
-### Rotate to the other slot:
-
-```bash
-> npm run rotate
-> curl https://api.somewhere.com/account
-> "Processing account resource from green slot..."
-```
-
-### Remove all slots/workers:
+### Remove:
 
 ```bash
 > npm run remove
@@ -99,7 +69,7 @@ Logical environments are a way to allow multiple deployments of the same logical
 
 To create a logical environment, add an _ENVIRONMENT_ variable to the **.env** file as explained in the table above, for example **ENVIRONMENT=alex**. Notice the environment (alex) prefixes the route and is part of the worker script name in the examples below:
 
-### Initial deploy to the default slot (blue):
+### Deploy:
 
 ```bash
 > npm run deploy
@@ -107,32 +77,12 @@ To create a logical environment, add an _ENVIRONMENT_ variable to the **.env** f
 > "Processing account resource in alex environment from blue slot..."
 ```
 
-### Activate the blue slot by rotating:
-
-```bash
-> npm run rotate
-> curl https://api.somewhere.com/alex/account
-> "Processing account resource in alex environment from blue slot..."
-```
-
-### Deploy to the other slot (green):
-
-```bash
-> npm run deploy
-> curl https://green-api.somewhere.com/alex/account
-> "Processing account resource in alex environment from green slot..."
-```
-
-### Rotate to the other slot:
-
-```bash
-> npm run rotate
-> curl https://api.somewhere.com/alex/account
-> "Processing account resource in alex environment from green slot..."
-```
-
-### Remove all slots/workers:
+### Remove:
 
 ```bash
 > npm run remove
 ```
+
+> See the repos from the other blog posts in this series for information on the blue/green deployment this repo builds on top of.
+>
+> - [Blue / Green deployments for Cloudflare Workers](https://github.com/peasey/cloudflare-workers-blue-green-poc)
